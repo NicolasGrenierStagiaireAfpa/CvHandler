@@ -37,6 +37,7 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.button4 = new System.Windows.Forms.Button();
+            this.btnExportGrid = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,7 +55,7 @@
             // button2
             // 
             this.button2.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.button2.Location = new System.Drawing.Point(945, 409);
+            this.button2.Location = new System.Drawing.Point(650, 411);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(209, 34);
             this.button2.TabIndex = 1;
@@ -126,13 +127,23 @@
             // button4
             // 
             this.button4.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.button4.Location = new System.Drawing.Point(1169, 422);
+            this.button4.Location = new System.Drawing.Point(876, 410);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.Size = new System.Drawing.Size(224, 23);
             this.button4.TabIndex = 8;
-            this.button4.Text = "button4";
+            this.button4.Text = "Tri LINQ dynamic";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // btnExportGrid
+            // 
+            this.btnExportGrid.Location = new System.Drawing.Point(118, 414);
+            this.btnExportGrid.Name = "btnExportGrid";
+            this.btnExportGrid.Size = new System.Drawing.Size(234, 29);
+            this.btnExportGrid.TabIndex = 9;
+            this.btnExportGrid.Text = "Exporter la vue dans Excel";
+            this.btnExportGrid.UseVisualStyleBackColor = true;
+            this.btnExportGrid.Click += new System.EventHandler(this.btnExportGrid_Click);
             // 
             // Form1
             // 
@@ -140,6 +151,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.ClientSize = new System.Drawing.Size(1448, 450);
+            this.Controls.Add(this.btnExportGrid);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.textBox3);
@@ -169,5 +181,6 @@
         private TextBox textBox3;
         private TextBox textBox4;
         private Button button4;
+        private Button btnExportGrid;
     }
 }

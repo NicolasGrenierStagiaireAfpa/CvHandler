@@ -1,7 +1,14 @@
 using System.Linq.Dynamic.Core;
 using CvHandlerForm.Models;
 using System.Data;
+using System.Text;
+using Microsoft.Extensions.Primitives;
+using System.Diagnostics;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
+//using Excel = Microsoft.Office.Interop.Excel;
 
 namespace CvHandlerForm
 {
@@ -102,6 +109,96 @@ namespace CvHandlerForm
             //textBox2.Text = selectedRow.Cells[1].Value.ToString();
             //textBox3.Text = selectedRow.Cells[2].Value.ToString();
             //textBox4.Text = selectedRow.Cells[3].Value.ToString();
+        }
+
+        private void btnExportGrid_Click(object sender, EventArgs e)
+        {
+            int nbrLignes = dataGridView1.Rows.Count;
+            int nbrColonnes = dataGridView1.Columns.Count;
+            var preCSV = new List<string>();
+            var file = @"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataFromGrid.csv";
+
+
+
+            //strb.Append(dataGridView1.Rows[0].Cells[0].Value).ToString();
+            //str = strb.ToString();
+            //MessageBox.Show(str);
+            //MessageBox.Show(nbrLignes.ToString());
+            //MessageBox.Show(nbrColonnes.ToString());
+            for (int i = 0; i < nbrLignes - 1; i++)
+            {
+                var strb = new StringBuilder();
+                string str;
+
+                for (int j = 0; j < nbrColonnes - 2; j++)
+                {
+                    var props = FonctionsUtiles.Utf16ToUtf8(dataGridView1.Rows[i].Cells[j].Value.ToString());
+                    strb.Append(props);
+                    strb.Append(";");
+                }
+                strb.Append(dataGridView1.Rows[i].Cells[nbrColonnes - 1].Value.ToString());
+                str = strb.ToString();
+                preCSV.Add(str);
+            }
+
+            using (var stream = File.CreateText(file))
+            {
+                foreach (string item in preCSV)
+                {
+                    stream.WriteLine(item);
+                }
+            }
+
+            var show = dataGridView1.Rows[3].Cells[1].Value.ToString();
+            MessageBox.Show(show);
+
+            string PathIN2 = @"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataFromGrid.csv";
+
+            string PathOUT2 = @"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataFromGridWin.csv";
+
+            FonctionsUtiles.BonFormatCSV(PathIN2, PathOUT2);
+
+            //var process1 = new ProcessStartInfo("excel.exe",PathOUT2);
+            //Process.Start("excel.exe",PathOUT2);   
+            //SpreadsheetDocument.Open(PathOUT2, true);
+
+
+
+
+            //using (StreamReader sr = new StreamReader(@"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataFromGrid.csv"))
+            //{
+            //    MessageBox.Show(sr.CurrentEncoding);
+            //};
+
+            //using (StreamReader sr = new StreamReader(@"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataFromGrid.csv")
+            //{
+            //    MessageBox.Show(sr.CurrentEncoding);
+            //};
+            //using (StreamReader sr = new StreamReader(@"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataFromGrid.csv")
+            //{
+            //     MessageBox.Show(sr.CurrentEncoding);
+            //};
+            //using (StreamReader sr = new StreamReader(@"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataFromGrid.csv")
+            //{
+            //    MessageBox.Show(sr.CurrentEncoding);
+            //}:
+
+
+
+
+            using (var process = new Process())
+            {
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.FileName = @"C:\Program Files\Microsoft Office\Office16\EXCEL.EXE";
+                process.StartInfo.Arguments = PathOUT2;
+                process.Start();
+
+            } ;
+
+
+
+
+
         }
     }
 }

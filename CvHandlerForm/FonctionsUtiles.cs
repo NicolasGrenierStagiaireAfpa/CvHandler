@@ -16,6 +16,13 @@ namespace CvHandlerForm
             System.IO.File.WriteAllText(PathOUT, txt);
         }
 
+        static public void BonFormatCSV2(string PathIN, string PathOUT)
+        {
+            string txt = System.IO.File.ReadAllText(PathIN, Encoding.GetEncoding("UTF-16be"));
+            System.IO.File.WriteAllText(PathOUT, txt);
+
+        }
+
         static public void PeuplerLaBDD(string Path)
         {
             using (var context = new CVDBContext())
@@ -91,6 +98,16 @@ namespace CvHandlerForm
                 context.SaveChanges();
             }
 
+        }
+
+        public static string Utf16ToUtf8(string utf16String)
+        {
+            // Get UTF16 bytes and convert UTF16 bytes to UTF8 bytes
+            byte[] utf16Bytes = Encoding.Unicode.GetBytes(utf16String);
+            byte[] utf8Bytes = Encoding.Convert(Encoding.Unicode, Encoding.UTF8, utf16Bytes);
+
+            // Return UTF8 bytes as ANSI string
+            return Encoding.Default.GetString(utf8Bytes);
         }
 
 
