@@ -29,19 +29,41 @@ namespace CvHandlerForm
             //string PathOUT = @"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataUTF8.csv";
 
             //FonctionsUtiles.BonFormatCSV(PathIN, PathOUT);
+            // C:\Users\GRENIER\source\repos\CvHandler\CvHandlerForm\CSV
 
         }
-           
+
         private void button2_Click(object sender, EventArgs e) // Peupler la BDD
         {
-            string PathIN = @"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdata.csv";
+            var relatifPath1 = Directory.GetCurrentDirectory();
 
-            string PathOUT = @"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataUTF8.csv";
+            var relatifPath2 = Directory.GetParent(relatifPath1).FullName;
+            
+            var relatifPath3 = Directory.GetParent(relatifPath2).FullName;
+
+            var relatifPath4 = Directory.GetParent(relatifPath3).FullName;
+
+            var relatifPath5 = relatifPath4 + "\\CSV\\hrdata.csv";
+
+            MessageBox.Show(relatifPath4);
+
+            string PathIN = @"C:\Users\GRENIER\source\repos\CvHandler\CvHandlerForm\CSV\hrdata.csv";
+
+            string PathOUT = @"C:\Users\GRENIER\source\repos\CvHandler\CvHandlerForm\CSV\hrdataUTF8.csv";
 
             FonctionsUtiles.BonFormatCSV(PathIN, PathOUT);
 
             FonctionsUtiles.PeuplerLaBDD(PathOUT);
         }
+
+        
+        //"Datasource=C:\\Users\\USER\\Documents\\CsharpProjects\\CvHandler\\CvHandlerForm\\DB\\CvHandlerDb.sqlite;"
+        //C:\\Users\\GRENIER\\source\\repos\\CvHandler\\CvHandlerForm\\DB\\CvHandlerDb.sqlite;
+        // string Imgpath = Directory.GetParent(Directory.GetCurrentDirectory()).FullName + "\\File\\img.png";
+        //string = Directory.GetCurrentDirectory().toString();
+
+        //string Path = "Datasource="+Directory.GetParent(Directory.GetCurrentDirectory()).FullName+"\\File\\img.png";
+        //string relativePathToImage = Path.Combine(Directory.GetCurrentDirectory(), "File", "img.png");
 
         private void button3_Click(object sender, EventArgs e) // Effacer la BDD
         {
@@ -179,7 +201,7 @@ namespace CvHandlerForm
             int nbrLignes = dataGridView1.Rows.Count;
             int nbrColonnes = dataGridView1.Columns.Count;
             var preCSV = new List<string>();
-            var file = @"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataFromGrid.csv";
+            var file = @"C:\Users\GRENIER\source\repos\CvHandler\CvHandlerForm\CSV\hrdataFromGrid.csv";
 
             for (int i = 0; i < nbrLignes - 1; i++)
             {
@@ -211,9 +233,9 @@ namespace CvHandlerForm
                 }
             }
 
-            string PathIN2 = @"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataFromGrid.csv";
+            string PathIN2 = @"C:\Users\GRENIER\source\repos\CvHandler\CvHandlerForm\CSV\hrdataFromGrid.csv";
 
-            string PathOUT2 = @"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataFromGridWin.csv";
+            string PathOUT2 = @"C:\Users\GRENIER\source\repos\CvHandler\CvHandlerForm\CSV\hrdataFromGridWin.csv";
 
             FonctionsUtiles.BonFormatCSV(PathIN2, PathOUT2);
 
