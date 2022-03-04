@@ -112,6 +112,24 @@ namespace CvHandlerForm
 
 
 
+        //Encoding utf8 = Encoding.UTF8;//encodingIn
+        //Encoding iso = Encoding.GetEncoding("UTF-16"); // encodingOut
+        //Encoding iso = Encoding.GetEncoding("ISO-8859-1"); // encodingOut
+
+        public static string ConvertSring(Encoding encodingIn, Encoding encodingOut, string stringIn) // unicode ves ascii
+        {
+            byte[] BytesIn   = encodingIn.GetBytes(stringIn);
+            byte[] BytesOut  = Encoding.Convert(encodingIn, encodingOut, BytesIn);
+            char[] CharsOut = new char[encodingOut.GetCharCount(BytesOut, 0, BytesOut.Length)];
+            encodingOut.GetChars(BytesOut, 0, BytesOut.Length, CharsOut, 0);
+            string stringOut = new string(CharsOut);
+
+            //string stringOut = encodingOut.GetString(BytesOut);
+            return stringOut;
+        }
+
+
+
 
 
 

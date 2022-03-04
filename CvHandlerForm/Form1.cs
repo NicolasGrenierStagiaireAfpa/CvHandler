@@ -24,22 +24,26 @@ namespace CvHandlerForm
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //string PathIN = @"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdata.csv";
+
+            //string PathOUT = @"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataUTF8.csv";
+
+            //FonctionsUtiles.BonFormatCSV(PathIN, PathOUT);
+
+        }
+           
+        private void button2_Click(object sender, EventArgs e) // Peupler la BDD
+        {
             string PathIN = @"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdata.csv";
 
             string PathOUT = @"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataUTF8.csv";
 
             FonctionsUtiles.BonFormatCSV(PathIN, PathOUT);
 
-        }
-           
-        private void button2_Click(object sender, EventArgs e)
-        {
-            string Path = @"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataUTF8.csv";
-
-            FonctionsUtiles.PeuplerLaBDD(Path);
+            FonctionsUtiles.PeuplerLaBDD(PathOUT);
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e) // Effacer la BDD
         {
             FonctionsUtiles.EffacerLaBDD();
 
@@ -69,33 +73,93 @@ namespace CvHandlerForm
 
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e) // Voir les postulants
         {
             string str = "Nom";
-            //Func<Postulant, string> orderByFunc = item => item.Nom;
-            //orderByFunc = item => item.Nom;
-            
-            //DataGridViewRow newDataRow = dataGridView1.Rows[indexRow];
-            //newDataRow.Cells[0].Value = textBox1.Text;
-            //newDataRow.Cells[1].Value = textBox2.Text;
-            //newDataRow.Cells[2].Value = textBox3.Text;
-            //newDataRow.Cells[3].Value = textBox4.Text;
-            try
+
+
+            using(var context = new CVDBContext())
             {
-                using(var context = new CVDBContext())
+                List<Postulant> postulants = context.Postulants.OrderBy(str).ToList();
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Id");
+                dt.Columns.Add("Nom");
+                dt.Columns.Add("Prenom");
+                dt.Columns.Add("Age");
+                dt.Columns.Add("DateDeNaissance");
+                dt.Columns.Add("Adresse");
+                dt.Columns.Add("AdresseComplement");
+                dt.Columns.Add("CodePostal");
+                dt.Columns.Add("Ville");
+                dt.Columns.Add("TelPortable");
+                dt.Columns.Add("TelFixe");
+                dt.Columns.Add("Email");
+                dt.Columns.Add("ProfilePro");
+                dt.Columns.Add("Competence1");
+                dt.Columns.Add("Competence2");
+                dt.Columns.Add("Competence3");
+                dt.Columns.Add("Competence4");
+                dt.Columns.Add("Competence5");
+                dt.Columns.Add("Competence6");
+                dt.Columns.Add("Competence7");
+                dt.Columns.Add("Competence8");
+                dt.Columns.Add("Competence9");
+                dt.Columns.Add("Competence10");
+                dt.Columns.Add("SiteWeb");
+                dt.Columns.Add("ProfileLinkedin");
+                dt.Columns.Add("ProfileViadeo");
+                dt.Columns.Add("ProfileFacebook");
+                foreach (Postulant postulant in postulants)
                 {
-
-                    dataGridView1.DataSource = context.Postulants.OrderBy(str).ToList();
-                       // .OrderBy(x => x.GetType().GetProperty(str).GetValue(x, null)); 
-
-                       
+                    dt.Rows.Add(postulant.Id,
+                        postulant.Nom,
+                        postulant.Prenom,
+                        postulant.Age,
+                        postulant.DateDeNaissance,
+                        postulant.Adresse,
+                        postulant.AdresseComplement,
+                        postulant.CodePostal,
+                        postulant.Ville,
+                        postulant.TelPortable,
+                        postulant.TelFixe,
+                        postulant.Email,
+                        postulant.ProfilePro,
+                        postulant.Competence1,
+                        postulant.Competence2,
+                        postulant.Competence3,
+                        postulant.Competence4,
+                        postulant.Competence5,
+                        postulant.Competence6,
+                        postulant.Competence7,
+                        postulant.Competence8,
+                        postulant.Competence9,
+                        postulant.Competence10,
+                        postulant.SiteWeb,
+                        postulant.ProfileLinkedin,
+                        postulant.ProfileViadeo,
+                        postulant.ProfileFacebook
+                        );
                 }
+                dataGridView1.DataSource = dt;  
 
-            }
-            catch (Exception)
-            {
 
-                throw;
+
+
+
+
+
+
+
+                //dataGridView1.DataSource = context.Postulants.OrderBy(str).ToList();
+
+
+                //     .OrderBy(x => x.GetType().GetProperty(str).GetValue(x, null));
+                //foreach (DataGridViewColumn column in dataGridView1.Columns)
+                //{
+
+                //    column.SortMode = DataGridViewColumnSortMode.Programmatic;
+                //}
+
             }
 
 
@@ -103,28 +167,20 @@ namespace CvHandlerForm
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //int index = e.RowIndex;// get the Row Index
-            //DataGridViewRow selectedRow = dataGridView1.Rows[index];
-            //textBox1.Text = selectedRow.Cells[0].Value.ToString();
-            //textBox2.Text = selectedRow.Cells[1].Value.ToString();
-            //textBox3.Text = selectedRow.Cells[2].Value.ToString();
-            //textBox4.Text = selectedRow.Cells[3].Value.ToString();
+
         }
 
-        private void btnExportGrid_Click(object sender, EventArgs e)
+
+
+
+
+        private void btnExportGrid_Click(object sender, EventArgs e) // Exporter la vue dans Excell
         {
             int nbrLignes = dataGridView1.Rows.Count;
             int nbrColonnes = dataGridView1.Columns.Count;
             var preCSV = new List<string>();
             var file = @"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataFromGrid.csv";
 
-
-
-            //strb.Append(dataGridView1.Rows[0].Cells[0].Value).ToString();
-            //str = strb.ToString();
-            //MessageBox.Show(str);
-            //MessageBox.Show(nbrLignes.ToString());
-            //MessageBox.Show(nbrColonnes.ToString());
             for (int i = 0; i < nbrLignes - 1; i++)
             {
                 var strb = new StringBuilder();
@@ -132,11 +188,15 @@ namespace CvHandlerForm
 
                 for (int j = 0; j < nbrColonnes - 2; j++)
                 {
-                    var props = FonctionsUtiles.Utf16ToUtf8(dataGridView1.Rows[i].Cells[j].Value.ToString());
-                    strb.Append(props);
+                    var props = dataGridView1.Rows[i].Cells[j].Value.ToString();
+                    var propsConvert = FonctionsUtiles.ConvertSring(Encoding.GetEncoding("UTF-16"), Encoding.GetEncoding("ISO-8859-1"),props);
+                    strb.Append(propsConvert);
                     strb.Append(";");
                 }
-                strb.Append(dataGridView1.Rows[i].Cells[nbrColonnes - 1].Value.ToString());
+                
+                var propsFinal= dataGridView1.Rows[i].Cells[nbrColonnes - 1].Value.ToString();
+                var propsConvertFinal = FonctionsUtiles.ConvertSring(Encoding.GetEncoding("UTF-16"), Encoding.GetEncoding("ISO-8859-1"), propsFinal);
+                strb.Append(propsConvertFinal);
                 str = strb.ToString();
                 preCSV.Add(str);
             }
@@ -145,12 +205,11 @@ namespace CvHandlerForm
             {
                 foreach (string item in preCSV)
                 {
-                    stream.WriteLine(item);
+                    //MessageBox.Show(item);
+                    var itemFinal = FonctionsUtiles.ConvertSring(Encoding.GetEncoding("UTF-16"), Encoding.GetEncoding("ISO-8859-1"), item);
+                    stream.WriteLine(itemFinal);
                 }
             }
-
-            var show = dataGridView1.Rows[3].Cells[1].Value.ToString();
-            MessageBox.Show(show);
 
             string PathIN2 = @"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataFromGrid.csv";
 
@@ -158,11 +217,19 @@ namespace CvHandlerForm
 
             FonctionsUtiles.BonFormatCSV(PathIN2, PathOUT2);
 
-            //var process1 = new ProcessStartInfo("excel.exe",PathOUT2);
-            //Process.Start("excel.exe",PathOUT2);   
-            //SpreadsheetDocument.Open(PathOUT2, true);
 
 
+
+
+
+            using (var process = new Process())
+            {
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.FileName = @"C:\Program Files\Microsoft Office\Office16\EXCEL.EXE";
+                process.StartInfo.Arguments = PathIN2;
+                process.Start();
+
+            } ;
 
 
             //using (StreamReader sr = new StreamReader(@"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataFromGrid.csv"))
@@ -186,19 +253,42 @@ namespace CvHandlerForm
 
 
 
-            using (var process = new Process())
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            using (var context = new CVDBContext())
             {
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.FileName = @"C:\Program Files\Microsoft Office\Office16\EXCEL.EXE";
-                process.StartInfo.Arguments = PathOUT2;
-                process.Start();
+                List<Postulant> usepurposes = context.Postulants.ToList();
+                DataTable dt = new DataTable();
+                dt.Columns.Add("Nom");
+                foreach (Postulant postulant in usepurposes)
+                {
+                    dt.Rows.Add(postulant.Nom);
+                }
+                comboBox1.ValueMember = dt.Columns[0].ColumnName; 
+                comboBox1.DisplayMember = dt.Columns[0].ColumnName;
+                comboBox1.DataSource = dt;  
 
-            } ;
+
+               
+                
+                
+                
+                
+                //comboBox1.DataSource = (from l in context.Postulants
+                //                        select l.Id)
+                //                        .ToList();
 
 
+                //comboBox1.DataSource= context.Postulants.ToList();
+                //comboBox1.ValueMember = "Nom";
+                //comboBox1.DisplayMember = "Nom";
+            }
 
 
-
+            //dataGridView1.DataSource = context.Postulants.OrderBy(str).ToList()
         }
     }
 }
