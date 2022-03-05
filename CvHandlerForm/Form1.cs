@@ -162,15 +162,7 @@ namespace CvHandlerForm
                         postulant.ProfileFacebook
                         );
                 }
-                dataGridView1.DataSource = dt;  
-
-
-
-
-
-
-
-
+                dataGridView1.DataSource = dt;
 
                 //dataGridView1.DataSource = context.Postulants.OrderBy(str).ToList();
 
@@ -182,9 +174,37 @@ namespace CvHandlerForm
                 //    column.SortMode = DataGridViewColumnSortMode.Programmatic;
                 //}
 
+                //System.Object[] ItemObject = new System.Object[10];
+                //for (int i = 0; i <= 9; i++)
+                //{
+                //    ItemObject[i] = "Item" + i;
+                //}
+                //comboBox1.Items.AddRange(ItemObject);
+
+                //int nbrLignes = dataGridView1.Rows.Count;
+                //System.Object[] ItemObject = new System.Object[nbrLignes];
+
+                //for (int i = 0; i <= nbrLignes - 1; i++)
+                //{
+                //    ItemObject[i] = dataGridView1.Rows[i].Cells[0].Value.ToString();
+                //}
+                //comboBox1.Items.AddRange(ItemObject);
+
+
+                comboBox1.Items.Clear();
+                int nbrLignes = dataGridView1.Rows.Count-1;
+                System.Object[] ItemObject = new System.Object[nbrLignes];
+
+                for (int i = 0; i <= nbrLignes-1; i++)
+                {
+                    ItemObject[i] = dataGridView1.Rows[i].Cells[0].Value.ToString();
+                    //MessageBox.Show(nbrLignes.ToString());
+                }
+                comboBox1.Items.AddRange(ItemObject);
+                 
+
+
             }
-
-
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -253,6 +273,9 @@ namespace CvHandlerForm
 
             } ;
 
+            // C:\Program Files\Mozilla Firefox
+
+
 
             //using (StreamReader sr = new StreamReader(@"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataFromGrid.csv"))
             //{
@@ -278,27 +301,44 @@ namespace CvHandlerForm
 
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) //Liste des Id des postulants
         {
             using (var context = new CVDBContext())
             {
-                List<Postulant> usepurposes = context.Postulants.ToList();
-                DataTable dt = new DataTable();
-                dt.Columns.Add("Nom");
-                foreach (Postulant postulant in usepurposes)
+
+
+                System.Object[] ItemObject = new System.Object[10];
+                for (int i = 0; i <= 9; i++)
                 {
-                    dt.Rows.Add(postulant.Nom);
+                    ItemObject[i] = "Item" + i;
                 }
-                comboBox1.ValueMember = dt.Columns[0].ColumnName; 
-                comboBox1.DisplayMember = dt.Columns[0].ColumnName;
-                comboBox1.DataSource = dt;  
+                comboBox1.Items.AddRange(ItemObject);
 
 
-               
-                
-                
-                
-                
+                //this.comboBox1.Items.AddRange(new object[] {"Item 1",
+                //        "Item 2",
+                //        "Item 3",
+                //        "Item 4",
+                //        "Item 5"});
+
+
+                //List<Postulant> usepurposes = context.Postulants.ToList();
+                //DataTable dt = new DataTable();
+                //dt.Columns.Add("Nom");
+                //foreach (Postulant postulant in usepurposes)
+                //{
+                //    dt.Rows.Add(postulant.Nom);
+                //}
+                //comboBox1.ValueMember = dt.Columns[0].ColumnName; 
+                //comboBox1.DisplayMember = dt.Columns[0].ColumnName;
+                //comboBox1.DataSource = dt;  
+
+
+
+
+
+
+
                 //comboBox1.DataSource = (from l in context.Postulants
                 //                        select l.Id)
                 //                        .ToList();
@@ -311,6 +351,130 @@ namespace CvHandlerForm
 
 
             //dataGridView1.DataSource = context.Postulants.OrderBy(str).ToList()
+        }
+
+        private void btnCvPDF_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.InitialDirectory = @"C:\Users\GRENIER\source\repos\CvHandler\CvHandlerForm\PDF";
+            openFileDialog1.ShowDialog();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            //DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
+            //if (result == DialogResult.OK) // Test result.
+            //{
+            //    string file = openFileDialog1.FileName;
+            //    openFileDialog1.InitialDirectory = @"C:\Users\GRENIER\source\repos\CvHandler\CvHandlerForm\PDF";
+
+            //    try
+            //    {
+            //        string text = File.ReadAllText(file);
+
+            //    }
+            //    catch (IOException)
+            //    {
+            //    }
+            //    MessageBox.Show(file.ToString());
+            //}
+
+
+
+
+
+            //using (var process = new Process())
+            //{
+            //C:\Program Files(x86)\Microsoft Office\OFFICE11\WORDVIEW.exe
+
+            //C:\Users\GRENIER\source\repos\CvHandler\CvHandlerForm\CSV
+
+            //string PathIN2 = @"C:\Users\GRENIER\source\repos\CvHandler\CvHandlerForm\CSV\hrdataFromGrid.csv";
+
+            //process.StartInfo.UseShellExecute = false;
+            //process.StartInfo.FileName = @"C:\Program Files(x86)\Microsoft Office\OFFICE11\WORDVIEW.exe";
+            //process.StartInfo.Arguments = PathIN2;
+            //process.Start();
+
+            //var choixId = comboBox1.SelectedItem as string;
+            //MessageBox.Show(choixId);
+            //@"C:\Users\GRENIER\source\repos\CvHandler\CvHandlerForm\PDF\2"
+
+            //process.StartInfo.UseShellExecute = false;
+            //process.StartInfo.FileName = @"C:\Program Files(x86)\Microsoft Office\OFFICE11\WORDVIEW.exe";
+            //process.StartInfo.Arguments = @"C:\Users\GRENIER\source\repos\CvHandler\CvHandlerForm\PDF\2";
+            //process.Start();
+
+            //C:\Program Files\Tracker Software\PDF Viewer\PDFXCview.exe
+
+
+            //process.StartInfo.UseShellExecute = false;
+            //process.StartInfo.FileName = @"C:\Program Files\Tracker Software\PDF Viewer\PDFXCview.exe";
+            //process.StartInfo.Arguments = @"C:\Users\GRENIER\source\repos\CvHandler\CvHandlerForm\PDF\2";
+            //process.Start();
+
+            //};
+
+        }
+
+        private void btnCvWORD_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog2 = new OpenFileDialog();
+            openFileDialog2.InitialDirectory = @"C:\Users\GRENIER\source\repos\CvHandler\CvHandlerForm\WORD";
+            openFileDialog2.ShowDialog();
+
+        }
+
+        private void btnEffacerLigne_Click(object sender, EventArgs e)
+        {
+            //var objSelect = comboBox1.SelectedItem;
+
+            if (comboBox1.SelectedItem!= null)
+            {
+                var idChoice = comboBox1.SelectedItem.ToString();
+
+                using (var context = new CVDBContext())
+                {
+                    //var query = from p in context.Postulants
+                    //            where p.Id == idChoice
+                    //            select p;
+                    //foreach (var postulants in query)
+                    //{
+                    //    context.Remove(postulants);
+                    //}
+
+                    var postulant = context.Postulants.SingleOrDefault(a => a.Id == idChoice);
+                    if (postulant != null)
+                    {
+                        context.Remove(postulant);
+                        context.SaveChanges();
+
+                    }
+                    //if (context.Postulants.Single(a => a.Id == idChoice).)
+                    //{
+
+                    //}
+
+                    //context.Remove(context.Postulants.Single(a => a.Id == idChoice));   
+                    //context.SaveChanges();
+
+                    //MessageBox.Show("null");
+
+                }
+            }
+
+            //MessageBox.Show(str);
         }
     }
 }
