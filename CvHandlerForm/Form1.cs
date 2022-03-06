@@ -14,27 +14,153 @@ namespace CvHandlerForm
 {
     public partial class Form1 : Form
     {
+
+
         public Form1()
         {
             InitializeComponent();
+
+            string str = "Nom";
+
+            using (var context = new CVDBContext())
+            {
+                List<Postulant> postulants = context.Postulants.OrderBy(str).ToList();
+                DataTable dt = new DataTable();
+
+                dt.Columns.Add("Id");
+                dt.Columns.Add("Nom");
+                dt.Columns.Add("Prenom");
+                dt.Columns.Add("Age");
+                dt.Columns.Add("DateDeNaissance");
+                dt.Columns.Add("Adresse");
+                dt.Columns.Add("AdresseComplement");
+                dt.Columns.Add("CodePostal");
+                dt.Columns.Add("Ville");
+                dt.Columns.Add("TelPortable");
+                dt.Columns.Add("TelFixe");
+                dt.Columns.Add("Email");
+                dt.Columns.Add("ProfilePro");
+                dt.Columns.Add("Competence1");
+                dt.Columns.Add("Competence2");
+                dt.Columns.Add("Competence3");
+                dt.Columns.Add("Competence4");
+                dt.Columns.Add("Competence5");
+                dt.Columns.Add("Competence6");
+                dt.Columns.Add("Competence7");
+                dt.Columns.Add("Competence8");
+                dt.Columns.Add("Competence9");
+                dt.Columns.Add("Competence10");
+                dt.Columns.Add("SiteWeb");
+                dt.Columns.Add("ProfileLinkedin");
+                dt.Columns.Add("ProfileViadeo");
+                dt.Columns.Add("ProfileFacebook");
+                foreach (Postulant postulant in postulants)
+                {
+                    dt.Rows.Add(postulant.Id,
+                        postulant.Nom,
+                        postulant.Prenom,
+                        postulant.Age,
+                        postulant.DateDeNaissance,
+                        postulant.Adresse,
+                        postulant.AdresseComplement,
+                        postulant.CodePostal,
+                        postulant.Ville,
+                        postulant.TelPortable,
+                        postulant.TelFixe,
+                        postulant.Email,
+                        postulant.ProfilePro,
+                        postulant.Competence1,
+                        postulant.Competence2,
+                        postulant.Competence3,
+                        postulant.Competence4,
+                        postulant.Competence5,
+                        postulant.Competence6,
+                        postulant.Competence7,
+                        postulant.Competence8,
+                        postulant.Competence9,
+                        postulant.Competence10,
+                        postulant.SiteWeb,
+                        postulant.ProfileLinkedin,
+                        postulant.ProfileViadeo,
+                        postulant.ProfileFacebook
+                        );
+                }
+                dataGridView1.DataSource = dt;
+
+                //dataGridView1.DataSource = context.Postulants.OrderBy(str).ToList();
+
+
+                //     .OrderBy(x => x.GetType().GetProperty(str).GetValue(x, null));
+                //foreach (DataGridViewColumn column in dataGridView1.Columns)
+                //{
+
+                //    column.SortMode = DataGridViewColumnSortMode.Programmatic;
+                //}
+
+                //System.Object[] ItemObject = new System.Object[10];
+                //for (int i = 0; i <= 9; i++)
+                //{
+                //    ItemObject[i] = "Item" + i;
+                //}
+                //comboBox1.Items.AddRange(ItemObject);
+
+                //int nbrLignes = dataGridView1.Rows.Count;
+                //System.Object[] ItemObject = new System.Object[nbrLignes];
+
+                //for (int i = 0; i <= nbrLignes - 1; i++)
+                //{
+                //    ItemObject[i] = dataGridView1.Rows[i].Cells[0].Value.ToString();
+                //}
+                //comboBox1.Items.AddRange(ItemObject);
+
+            }
+            List<string> list = new List<string>();
+            using (var contxt = new CVDBContext())
+            {
+                list.AddRange(contxt.Postulants.Select(x => x.Competence1).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence2).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence3).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence4).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence5).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence6).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence7).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence8).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence9).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence10).ToList());
+            }
+
+            HashSet<string> hashWithoutDuplicates = new HashSet<string>(list);
+            List<string> listWithoutDuplicates = hashWithoutDuplicates.ToList();
+            listWithoutDuplicates.Remove("NULL");
+            listWithoutDuplicates.Sort();
+
+            comboBox1.Items.Clear();
+            int nbrLignes = dataGridView1.Rows.Count - 1;
+            System.Object[] ItemObject = new System.Object[nbrLignes];
+
+            for (int i = 0; i <= nbrLignes - 1; i++)
+            {
+                ItemObject[i] = dataGridView1.Rows[i].Cells[0].Value.ToString();
+            }
+
+            comboBox1.Items.AddRange(ItemObject);
+
+            comboBox2.Items.Clear();
+            comboBox2.Items.AddRange(listWithoutDuplicates.ToArray());
+
         }
 
         DataTable table = new DataTable();
-        int indexRow;
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e) 
         {
-            //string PathIN = @"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdata.csv";
-
-            //string PathOUT = @"C:\Users\USER\Documents\CsharpProjects\CvHandler\CvHandlerForm\CSV\hrdataUTF8.csv";
-
-            //FonctionsUtiles.BonFormatCSV(PathIN, PathOUT);
-            // C:\Users\GRENIER\source\repos\CvHandler\CvHandlerForm\CSV
-
         }
 
-        private void button2_Click(object sender, EventArgs e) // Peupler la BDD
+        private void button2_Click(object sender, EventArgs e) // Réinitialiser la BDD
         {
+
+            FonctionsUtiles.EffacerLaBDD();
+
             var relatifPath1 = Directory.GetCurrentDirectory();
 
             var relatifPath2 = Directory.GetParent(relatifPath1).FullName;
@@ -45,7 +171,7 @@ namespace CvHandlerForm
 
             var relatifPath5 = relatifPath4 + "\\CSV\\hrdata.csv";
 
-            MessageBox.Show(relatifPath4);
+            //MessageBox.Show(relatifPath4);
 
             string PathIN = @"C:\Users\GRENIER\source\repos\CvHandler\CvHandlerForm\CSV\hrdata.csv";
 
@@ -67,7 +193,7 @@ namespace CvHandlerForm
 
         private void button3_Click(object sender, EventArgs e) // Effacer la BDD
         {
-            FonctionsUtiles.EffacerLaBDD();
+            //FonctionsUtiles.EffacerLaBDD();
 
         }
 
@@ -104,7 +230,7 @@ namespace CvHandlerForm
             {
                 List<Postulant> postulants = context.Postulants.OrderBy(str).ToList();
                 DataTable dt = new DataTable();
-                DataTable dt2 = new DataTable();    
+
                 dt.Columns.Add("Id");
                 dt.Columns.Add("Nom");
                 dt.Columns.Add("Prenom");
@@ -132,7 +258,6 @@ namespace CvHandlerForm
                 dt.Columns.Add("ProfileLinkedin");
                 dt.Columns.Add("ProfileViadeo");
                 dt.Columns.Add("ProfileFacebook");
-                //dt2.Columns.Add("Competences");
                 foreach (Postulant postulant in postulants)
                 {
                     dt.Rows.Add(postulant.Id,
@@ -212,17 +337,10 @@ namespace CvHandlerForm
                 list.AddRange(contxt.Postulants.Select(x => x.Competence10).ToList());
             }
 
-            //List<int> listWithDuplicates = list;
             HashSet<string> hashWithoutDuplicates = new HashSet<string>(list);
             List<string> listWithoutDuplicates = hashWithoutDuplicates.ToList();
             listWithoutDuplicates.Remove("NULL");
             listWithoutDuplicates.Sort();
-
-            //foreach (var item in listWithoutDuplicates)
-            //{
-            //    MessageBox.Show(item);
-            //}
-
 
             comboBox1.Items.Clear();
             int nbrLignes = dataGridView1.Rows.Count-1;
@@ -231,18 +349,12 @@ namespace CvHandlerForm
                 for (int i = 0; i <= nbrLignes-1; i++)
                 {
                     ItemObject[i] = dataGridView1.Rows[i].Cells[0].Value.ToString();
-                    //MessageBox.Show(nbrLignes.ToString());
                 }
 
             comboBox1.Items.AddRange(ItemObject);
 
             comboBox2.Items.Clear();
             comboBox2.Items.AddRange(listWithoutDuplicates.ToArray());
-
-
-
-
-
         }
 
 
@@ -251,8 +363,6 @@ namespace CvHandlerForm
         {
 
         }
-
-
 
 
 
@@ -287,7 +397,6 @@ namespace CvHandlerForm
             {
                 foreach (string item in preCSV)
                 {
-                    //MessageBox.Show(item);
                     var itemFinal = FonctionsUtiles.ConvertSring(Encoding.GetEncoding("UTF-16"), Encoding.GetEncoding("ISO-8859-1"), item);
                     stream.WriteLine(itemFinal);
                 }
@@ -299,11 +408,6 @@ namespace CvHandlerForm
 
             FonctionsUtiles.BonFormatCSV(PathIN2, PathOUT2);
 
-
-
-
-
-
             using (var process = new Process())
             {
                 process.StartInfo.UseShellExecute = false;
@@ -311,7 +415,7 @@ namespace CvHandlerForm
                 process.StartInfo.Arguments = PathIN2;
                 process.Start();
 
-            } ;
+            } 
 
             // C:\Program Files\Mozilla Firefox
 
@@ -334,10 +438,6 @@ namespace CvHandlerForm
             //{
             //    MessageBox.Show(sr.CurrentEncoding);
             //}:
-
-
-
-
 
         }
 
@@ -399,19 +499,6 @@ namespace CvHandlerForm
             openFileDialog1.InitialDirectory = @"C:\Users\GRENIER\source\repos\CvHandler\CvHandlerForm\PDF";
             openFileDialog1.ShowDialog();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
             //OpenFileDialog openFileDialog1 = new OpenFileDialog();
             //DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
             //if (result == DialogResult.OK) // Test result.
@@ -429,10 +516,6 @@ namespace CvHandlerForm
             //    }
             //    MessageBox.Show(file.ToString());
             //}
-
-
-
-
 
             //using (var process = new Process())
             //{
@@ -478,8 +561,6 @@ namespace CvHandlerForm
 
         private void btnEffacerLigne_Click(object sender, EventArgs e)
         {
-            //var objSelect = comboBox1.SelectedItem;
-
             if (comboBox1.SelectedItem!= null)
             {
                 var idChoice = comboBox1.SelectedItem.ToString();
@@ -501,20 +582,103 @@ namespace CvHandlerForm
                         context.SaveChanges();
 
                     }
-                    //if (context.Postulants.Single(a => a.Id == idChoice).)
-                    //{
-
-                    //}
-
-                    //context.Remove(context.Postulants.Single(a => a.Id == idChoice));   
-                    //context.SaveChanges();
-
-                    //MessageBox.Show("null");
-
                 }
             }
+        }
 
-            //MessageBox.Show(str);
+        private void button2_Click_1(object sender, EventArgs e) // Voir les postulants qui ont cette compétence
+        {
+            
+            if (comboBox2.SelectedItem != null)
+            {
+                var competenceChoice = comboBox2.SelectedItem.ToString();
+
+                using (var context = new CVDBContext())
+                {
+                    List<Postulant> postulants = context.Postulants.Where(a => a.Competence1 == competenceChoice 
+                                                                           || a.Competence2 == competenceChoice
+                                                                           || a.Competence3 == competenceChoice
+                                                                           || a.Competence4 == competenceChoice
+                                                                           || a.Competence5 == competenceChoice
+                                                                           || a.Competence6 == competenceChoice
+                                                                           || a.Competence7 == competenceChoice
+                                                                           || a.Competence8 == competenceChoice
+                                                                           || a.Competence9 == competenceChoice
+                                                                           || a.Competence10 == competenceChoice
+                                                                           ).ToList();
+                    DataTable dt = new DataTable(); 
+                    dt.Columns.Add("Id");
+                    dt.Columns.Add("Nom");
+                    dt.Columns.Add("Prenom");
+                    dt.Columns.Add("Age");
+                    dt.Columns.Add("DateDeNaissance");
+                    dt.Columns.Add("Adresse");
+                    dt.Columns.Add("AdresseComplement");
+                    dt.Columns.Add("CodePostal");
+                    dt.Columns.Add("Ville");
+                    dt.Columns.Add("TelPortable");
+                    dt.Columns.Add("TelFixe");
+                    dt.Columns.Add("Email");
+                    dt.Columns.Add("ProfilePro");
+                    dt.Columns.Add("Competence1");
+                    dt.Columns.Add("Competence2");
+                    dt.Columns.Add("Competence3");
+                    dt.Columns.Add("Competence4");
+                    dt.Columns.Add("Competence5");
+                    dt.Columns.Add("Competence6");
+                    dt.Columns.Add("Competence7");
+                    dt.Columns.Add("Competence8");
+                    dt.Columns.Add("Competence9");
+                    dt.Columns.Add("Competence10");
+                    dt.Columns.Add("SiteWeb");
+                    dt.Columns.Add("ProfileLinkedin");
+                    dt.Columns.Add("ProfileViadeo");
+                    dt.Columns.Add("ProfileFacebook");
+                    foreach (Postulant postulant in postulants)
+                    {
+                        dt.Rows.Add(postulant.Id,
+                            postulant.Nom,
+                            postulant.Prenom,
+                            postulant.Age,
+                            postulant.DateDeNaissance,
+                            postulant.Adresse,
+                            postulant.AdresseComplement,
+                            postulant.CodePostal,
+                            postulant.Ville,
+                            postulant.TelPortable,
+                            postulant.TelFixe,
+                            postulant.Email,
+                            postulant.ProfilePro,
+                            postulant.Competence1,
+                            postulant.Competence2,
+                            postulant.Competence3,
+                            postulant.Competence4,
+                            postulant.Competence5,
+                            postulant.Competence6,
+                            postulant.Competence7,
+                            postulant.Competence8,
+                            postulant.Competence9,
+                            postulant.Competence10,
+                            postulant.SiteWeb,
+                            postulant.ProfileLinkedin,
+                            postulant.ProfileViadeo,
+                            postulant.ProfileFacebook
+                            );
+                    }
+                    dataGridView1.DataSource = dt;
+                }
+            }
+        }
+
+        private void btnInsererLigne_Click(object sender, EventArgs e)
+        {
+            Form2 form2 = new Form2();
+            form2.Show();
+        }
+
+        private void btnEditerLigne_Click(object sender, EventArgs e)
+        {            
+            
         }
     }
 }

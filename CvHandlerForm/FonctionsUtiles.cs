@@ -110,8 +110,6 @@ namespace CvHandlerForm
             return Encoding.Default.GetString(utf8Bytes);
         }
 
-
-
         //Encoding utf8 = Encoding.UTF8;//encodingIn
         //Encoding iso = Encoding.GetEncoding("UTF-16"); // encodingOut
         //Encoding iso = Encoding.GetEncoding("ISO-8859-1"); // encodingOut
@@ -127,12 +125,6 @@ namespace CvHandlerForm
             //string stringOut = encodingOut.GetString(BytesOut);
             return stringOut;
         }
-
-
-
-
-
-
 
     }
 }
