@@ -104,6 +104,7 @@ namespace CvHandlerForm
             {
                 List<Postulant> postulants = context.Postulants.OrderBy(str).ToList();
                 DataTable dt = new DataTable();
+                DataTable dt2 = new DataTable();    
                 dt.Columns.Add("Id");
                 dt.Columns.Add("Nom");
                 dt.Columns.Add("Prenom");
@@ -131,6 +132,7 @@ namespace CvHandlerForm
                 dt.Columns.Add("ProfileLinkedin");
                 dt.Columns.Add("ProfileViadeo");
                 dt.Columns.Add("ProfileFacebook");
+                //dt2.Columns.Add("Competences");
                 foreach (Postulant postulant in postulants)
                 {
                     dt.Rows.Add(postulant.Id,
@@ -161,6 +163,10 @@ namespace CvHandlerForm
                         postulant.ProfileViadeo,
                         postulant.ProfileFacebook
                         );
+                    //dt2.Rows.Add(postulant.Competence1);
+                    //dt2.Rows.Add(postulant.Competence2);
+                    //dt2.Rows.Add(postulant.Competence3);
+                    //dt2.Rows.Add(postulant.Competence4);
                 }
                 dataGridView1.DataSource = dt;
 
@@ -190,22 +196,56 @@ namespace CvHandlerForm
                 //}
                 //comboBox1.Items.AddRange(ItemObject);
 
+            }
+            List<string> list = new List<string>();
+            using (var contxt = new CVDBContext())
+            {               
+                list.AddRange(contxt.Postulants.Select(x => x.Competence1).ToList()); 
+                list.AddRange(contxt.Postulants.Select(x => x.Competence2).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence3).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence4).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence5).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence6).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence7).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence8).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence9).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence10).ToList());
+            }
 
-                comboBox1.Items.Clear();
-                int nbrLignes = dataGridView1.Rows.Count-1;
-                System.Object[] ItemObject = new System.Object[nbrLignes];
+            //List<int> listWithDuplicates = list;
+            HashSet<string> hashWithoutDuplicates = new HashSet<string>(list);
+            List<string> listWithoutDuplicates = hashWithoutDuplicates.ToList();
+            listWithoutDuplicates.Remove("NULL");
+            listWithoutDuplicates.Sort();
+
+            //foreach (var item in listWithoutDuplicates)
+            //{
+            //    MessageBox.Show(item);
+            //}
+
+
+            comboBox1.Items.Clear();
+            int nbrLignes = dataGridView1.Rows.Count-1;
+            System.Object[] ItemObject = new System.Object[nbrLignes];
 
                 for (int i = 0; i <= nbrLignes-1; i++)
                 {
                     ItemObject[i] = dataGridView1.Rows[i].Cells[0].Value.ToString();
                     //MessageBox.Show(nbrLignes.ToString());
                 }
-                comboBox1.Items.AddRange(ItemObject);
-                 
+
+            comboBox1.Items.AddRange(ItemObject);
+
+            comboBox2.Items.Clear();
+            comboBox2.Items.AddRange(listWithoutDuplicates.ToArray());
 
 
-            }
+
+
+
         }
+
+
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -303,16 +343,16 @@ namespace CvHandlerForm
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) //Liste des Id des postulants
         {
-            using (var context = new CVDBContext())
-            {
+            //using (var context = new CVDBContext())
+            //{
 
 
-                System.Object[] ItemObject = new System.Object[10];
-                for (int i = 0; i <= 9; i++)
-                {
-                    ItemObject[i] = "Item" + i;
-                }
-                comboBox1.Items.AddRange(ItemObject);
+                //System.Object[] ItemObject = new System.Object[10];
+                //for (int i = 0; i <= 9; i++)
+                //{
+                //    ItemObject[i] = "Item" + i;
+                //}
+                //comboBox1.Items.AddRange(ItemObject);
 
 
                 //this.comboBox1.Items.AddRange(new object[] {"Item 1",
@@ -347,7 +387,7 @@ namespace CvHandlerForm
                 //comboBox1.DataSource= context.Postulants.ToList();
                 //comboBox1.ValueMember = "Nom";
                 //comboBox1.DisplayMember = "Nom";
-            }
+            //}
 
 
             //dataGridView1.DataSource = context.Postulants.OrderBy(str).ToList()

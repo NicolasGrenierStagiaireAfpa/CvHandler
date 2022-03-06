@@ -41,6 +41,8 @@
             this.btnEffacerLigne = new System.Windows.Forms.Button();
             this.btnEditerLigne = new System.Windows.Forms.Button();
             this.btnInsererLigne = new System.Windows.Forms.Button();
+            this.lblCompetences = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -191,12 +193,32 @@
             this.btnInsererLigne.Text = "Inserer une ligne";
             this.btnInsererLigne.UseVisualStyleBackColor = true;
             // 
+            // lblCompetences
+            // 
+            this.lblCompetences.AutoSize = true;
+            this.lblCompetences.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.lblCompetences.Location = new System.Drawing.Point(420, 727);
+            this.lblCompetences.Name = "lblCompetences";
+            this.lblCompetences.Size = new System.Drawing.Size(160, 32);
+            this.lblCompetences.TabIndex = 17;
+            this.lblCompetences.Text = "Compétences";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(351, 762);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(294, 40);
+            this.comboBox2.TabIndex = 18;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 32F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.ClientSize = new System.Drawing.Size(2689, 960);
+            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.lblCompetences);
             this.Controls.Add(this.btnInsererLigne);
             this.Controls.Add(this.btnEditerLigne);
             this.Controls.Add(this.btnEffacerLigne);
@@ -235,5 +257,7 @@
         private Button btnEffacerLigne;
         private Button btnEditerLigne;
         private Button btnInsererLigne;
+        private Label lblCompetences;
+        private ComboBox comboBox2;
     }
 }
