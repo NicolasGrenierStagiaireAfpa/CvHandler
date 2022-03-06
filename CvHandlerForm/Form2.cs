@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,24 +21,14 @@ namespace CvHandlerForm
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void Form2_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void label4_Click(object sender, EventArgs e)
+        private void buttonInsererPostulant_Click(object sender, EventArgs e) // Insérer les informations du postulant
         {
-
-        }
-
-        private void buttonInsererPostulant_Click(object sender, EventArgs e)
-        {
-            var listString  = new List<string>();
+            var listString = new List<string>();
             var listInteger = new List<int>();
             textBoxId.Text = "0";
 
@@ -51,7 +42,7 @@ namespace CvHandlerForm
                 listInteger.Add(int.Parse(item));
             }
 
-            int maxId    = listInteger.Max();
+            int maxId = listInteger.Max();
             int a;
 
             if (!int.TryParse(textBoxId.Text, out a))
@@ -66,16 +57,17 @@ namespace CvHandlerForm
                 textBoxId.Text = (maxId + 1).ToString();
             }
 
-            MessageBox.Show(textBoxId.Text.ToString());
+            //MessageBox.Show(textBoxId.Text.ToString());
 
+            var cultureInfo = new CultureInfo("de-DE");
+            var postulant = new Postulant();
             using (var context = new CVDBContext())
             {
-                var postulant =new Postulant();
-                postulant.Id = textBoxId.Text;  
+                postulant.Id = textBoxId.Text;
                 postulant.Nom = textBoxNom.Text;
                 postulant.Prenom = textBoxPrenom.Text;
                 postulant.Age = textBoxAge.Text;
-                postulant.DateDeNaissance= textBoxDateDeNaissance.Text; 
+                postulant.DateDeNaissance = textBoxDateDeNaissance.Text;
                 postulant.Adresse = textBoxAdresse.Text;
                 postulant.AdresseComplement = textBoxComplementAdresse.Text;
                 postulant.CodePostal = textBoxCodePostal.Text;
@@ -83,9 +75,9 @@ namespace CvHandlerForm
                 postulant.TelPortable = textBoxTelPortable.Text;
                 postulant.TelFixe = textBoxTelFixe.Text;
                 postulant.Email = textBoxEmail.Text;
-                postulant.ProfilePro= textBoxProfilePro.Text;
-                postulant.Competence1 = textBoxCompetence1.Text;    
-                postulant.Competence2 = textBoxCompetence2.Text;    
+                postulant.ProfilePro = textBoxProfilePro.Text;
+                postulant.Competence1 = textBoxCompetence1.Text;
+                postulant.Competence2 = textBoxCompetence2.Text;
                 postulant.Competence3 = textBoxCompetence3.Text;
                 postulant.Competence4 = textBoxCompetence4.Text;
                 postulant.Competence5 = textBoxCompetence5.Text;
@@ -98,11 +90,30 @@ namespace CvHandlerForm
                 postulant.ProfileLinkedin = textBoxProfileLinkedin.Text;
                 postulant.ProfileViadeo = textBoxProfileViadeo.Text;
                 postulant.ProfileFacebook = textBoxProfileFacebook.Text;
-                
+
+                try
+                {
+                    var BirthDay = postulant.DateDeNaissance;
+                    var dateTime = DateTime.Parse(BirthDay, cultureInfo);
+                    var age = DateTime.Now.Year - dateTime.Year - 1;
+                    postulant.Age = age.ToString();
+                }
+                catch //(Exception ex)                  
+                {
+                    ;
+                }
+
                 context.Postulants.Add(postulant);
-                context.SaveChanges();   
+                context.SaveChanges();
             }
+
+
             this.Close();
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void textBoxId_TextChanged(object sender, EventArgs e)
@@ -110,9 +121,18 @@ namespace CvHandlerForm
 
         }
 
-        private void radioButonUpdateInsert_CheckedChanged(object sender, EventArgs e)
+        private void radioButonUpdateInsert_CheckedChanged(object sender, EventArgs e) // Choisir entre Insertion et Update
         {
 
         }
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+
+
     }
 }

@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.btnPeuplerLaBDD = new System.Windows.Forms.Button();
-            this.btnEffacerLaBDD = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button4 = new System.Windows.Forms.Button();
             this.btnExportGrid = new System.Windows.Forms.Button();
@@ -56,18 +55,6 @@
             this.btnPeuplerLaBDD.Text = "Réinitialiser la BDD";
             this.btnPeuplerLaBDD.UseVisualStyleBackColor = true;
             this.btnPeuplerLaBDD.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // btnEffacerLaBDD
-            // 
-            this.btnEffacerLaBDD.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnEffacerLaBDD.Location = new System.Drawing.Point(2321, 757);
-            this.btnEffacerLaBDD.Margin = new System.Windows.Forms.Padding(6);
-            this.btnEffacerLaBDD.Name = "btnEffacerLaBDD";
-            this.btnEffacerLaBDD.Size = new System.Drawing.Size(345, 64);
-            this.btnEffacerLaBDD.TabIndex = 2;
-            this.btnEffacerLaBDD.Text = "Effacer la BDD";
-            this.btnEffacerLaBDD.UseVisualStyleBackColor = true;
-            this.btnEffacerLaBDD.Click += new System.EventHandler(this.button3_Click);
             // 
             // dataGridView1
             // 
@@ -218,7 +205,6 @@
             this.Controls.Add(this.btnExportGrid);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.btnEffacerLaBDD);
             this.Controls.Add(this.btnPeuplerLaBDD);
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Form1";
@@ -232,7 +218,6 @@
 
         #endregion
         private Button btnPeuplerLaBDD;
-        private Button btnEffacerLaBDD;
         private DataGridView dataGridView1;
         private Button button4;
         private Button btnExportGrid;

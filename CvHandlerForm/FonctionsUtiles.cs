@@ -1,6 +1,7 @@
 ﻿using CvHandlerForm.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -114,7 +115,7 @@ namespace CvHandlerForm
         //Encoding iso = Encoding.GetEncoding("UTF-16"); // encodingOut
         //Encoding iso = Encoding.GetEncoding("ISO-8859-1"); // encodingOut
 
-        public static string ConvertSring(Encoding encodingIn, Encoding encodingOut, string stringIn) // unicode ves ascii
+        static public string ConvertSring(Encoding encodingIn, Encoding encodingOut, string stringIn) // unicode ves ascii
         {
             byte[] BytesIn   = encodingIn.GetBytes(stringIn);
             byte[] BytesOut  = Encoding.Convert(encodingIn, encodingOut, BytesIn);
@@ -125,6 +126,110 @@ namespace CvHandlerForm
             //string stringOut = encodingOut.GetString(BytesOut);
             return stringOut;
         }
+        
+        static public DataTable BddToDataTable()
+        {            
+            DataTable dt = new DataTable();
+            using (var context = new CVDBContext())
+            {
+                List<Postulant> postulants = context.Postulants.ToList();
+                
+                dt.Columns.Add("Id");
+                dt.Columns.Add("Nom");
+                dt.Columns.Add("Prenom");
+                dt.Columns.Add("Age");
+                dt.Columns.Add("DateDeNaissance");
+                dt.Columns.Add("Adresse");
+                dt.Columns.Add("AdresseComplement");
+                dt.Columns.Add("CodePostal");
+                dt.Columns.Add("Ville");
+                dt.Columns.Add("TelPortable");
+                dt.Columns.Add("TelFixe");
+                dt.Columns.Add("Email");
+                dt.Columns.Add("ProfilePro");
+                dt.Columns.Add("Competence1");
+                dt.Columns.Add("Competence2");
+                dt.Columns.Add("Competence3");
+                dt.Columns.Add("Competence4");
+                dt.Columns.Add("Competence5");
+                dt.Columns.Add("Competence6");
+                dt.Columns.Add("Competence7");
+                dt.Columns.Add("Competence8");
+                dt.Columns.Add("Competence9");
+                dt.Columns.Add("Competence10");
+                dt.Columns.Add("SiteWeb");
+                dt.Columns.Add("ProfileLinkedin");
+                dt.Columns.Add("ProfileViadeo");
+                dt.Columns.Add("ProfileFacebook");
+                foreach (Postulant postulant in postulants)
+                {
+                    dt.Rows.Add(postulant.Id,
+                        postulant.Nom,
+                        postulant.Prenom,
+                        postulant.Age,
+                        postulant.DateDeNaissance,
+                        postulant.Adresse,
+                        postulant.AdresseComplement,
+                        postulant.CodePostal,
+                        postulant.Ville,
+                        postulant.TelPortable,
+                        postulant.TelFixe,
+                        postulant.Email,
+                        postulant.ProfilePro,
+                        postulant.Competence1,
+                        postulant.Competence2,
+                        postulant.Competence3,
+                        postulant.Competence4,
+                        postulant.Competence5,
+                        postulant.Competence6,
+                        postulant.Competence7,
+                        postulant.Competence8,
+                        postulant.Competence9,
+                        postulant.Competence10,
+                        postulant.SiteWeb,
+                        postulant.ProfileLinkedin,
+                        postulant.ProfileViadeo,
+                        postulant.ProfileFacebook
+                        );
+                }
 
+            }
+            return dt;
+        }
+
+        static public String[] ArrayOfCompetenceFromDbb()
+        {
+            List<string> list = new List<string>();
+            using (var contxt = new CVDBContext())
+            {
+                list.AddRange(contxt.Postulants.Select(x => x.Competence1).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence2).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence3).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence4).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence5).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence6).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence7).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence8).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence9).ToList());
+                list.AddRange(contxt.Postulants.Select(x => x.Competence10).ToList());
+            }
+
+            HashSet<string> hashWithoutDuplicates = new HashSet<string>(list);
+            List<string> listWithoutDuplicates = hashWithoutDuplicates.ToList();
+            listWithoutDuplicates.Remove("NULL");
+            listWithoutDuplicates.Sort();
+            return listWithoutDuplicates.ToArray();
+
+        }
+
+        static public String[] ArrayOfIdFromDbb()
+        {
+            List<string> list = new List<string>();
+            using (var contxt = new CVDBContext())
+            {
+                list.AddRange(contxt.Postulants.Select(x => x.Id).ToList());
+            }
+            return list.ToArray();
+        }
     }
 }
